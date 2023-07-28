@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="form-outline">
+    <label class="form-label" for="formControlLg">Shorten a long link</label>
+    <input type="text" id="url-field" class="form-control form-control-lg" placeholder="Enter long link here"/>
+    <span id="url-error"></span>
+    </br>
+    <input type="text" id="alias-field" class="form-control form-control-lg" placeholder="Enter alias" />
+    <span id="alias-error"></span>
+    </br>
+    <button id ="shortenbutton" class="btn btn-primary btn-lg mt-3" onclick="shortenUrl()">Shorten URL</button>
+    <button id="gotourl" class="btn btn-primary btn-lg mt-3" onclick="goToUrl()">Go to URL</button>
+    
+</div>
+
+
+@*@section Scripts {
+    <script src="~/js/validation.js></script>
+}*@
