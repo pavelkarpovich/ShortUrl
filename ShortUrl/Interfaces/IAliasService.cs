@@ -1,9 +1,12 @@
-﻿namespace ShortUrl.Web.Interfaces
+﻿using ShortUrl.Web.Models;
+
+namespace ShortUrl.Web.Interfaces
 {
     public interface IAliasService
     {
-        Task<bool> IsAliasExist(string alias);
-        Task AddAlias(string alias, string url);
-        Task<string> GetUrl(string alias);
+        bool IsAliasExist(string alias);
+        void AddAlias(string alias, string url, string userId);
+        string? GetUrl(string alias);
+        Task<IEnumerable<AliasUrl>> GetMyUrls(string userId);
     }
 }

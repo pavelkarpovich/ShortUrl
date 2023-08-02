@@ -23,11 +23,13 @@ namespace ShortUrl.Controllers
             return View();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Index(string alias)
+        [HttpGet("{alias}")]
+        public IActionResult Index(string alias)
         {
-            var url =  await _aliasService.GetUrl(alias);
-            return Redirect(url);
+            var url = _aliasService.GetUrl(alias);
+            if (url is null)
+                return View();
+            else return Redirect(url);
         }
     }
 }

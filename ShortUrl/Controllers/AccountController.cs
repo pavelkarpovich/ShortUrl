@@ -42,6 +42,7 @@ namespace ShortUrl.Web.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -89,6 +90,12 @@ namespace ShortUrl.Web.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<ContentResult> GetUserName()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return Content(user.Name);
         }
     }
 }

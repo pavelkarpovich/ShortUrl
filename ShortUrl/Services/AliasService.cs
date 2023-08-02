@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ShortUrl.ApplicationCore.Entities;
+using ShortUrl.ApplicationCore.Interfaces;
 using ShortUrl.Infrastructure.Data;
 using ShortUrl.Web.Interfaces;
 
@@ -7,30 +9,36 @@ namespace ShortUrl.Web.Services
 {
     public class AliasService : IAliasService
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IRepository<Alias> _aliasRepository;
 
-        public AliasService(ApplicationDbContext dbContext)
+        public AliasService(IRepository<Alias> aliasRepository)
         {
-            _dbContext = dbContext;
+            _aliasRepository = aliasRepository;
         }
 
-        public async Task AddAlias(string alias, string url)
+        public void AddAlias(string alias, string url, string userId)
         {
-            await _dbContext.Aliases.AddAsync(new Alias(alias, url));
-            await _dbContext.SaveChangesAsync();
+            
+            _aliasRepository.Create(new Alias(alias, url, userId));
         }
 
-        public async Task<bool> IsAliasExist(string alias)
+        public async Task<IEnumerable<Models.AliasUrl>> GetMyUrls(string userId)
         {
-            return await _dbContext.Aliases
-                .Where(x => x.AliasName == alias)
-                .AnyAsync();
+            var items = (await _aliasRepository.GetAsync(x => x.UserId == userId)).Select(x => 
+                new Models.AliasUrl() { AliasValue = "https://localhost:7054/" + x.AliasName, UrlValue = x.Url});
+            return items;
         }
 
-        public async Task<string> GetUrl(string alias)
+        public string? GetUrl(string alias)
         {
-            return await _dbContext.Aliases
-                .Where(x => x.AliasName == alias).Select(x => x.Url).FirstOrDefaultAsync();
+            var item = (_aliasRepository.Get(x => x.AliasName == alias)).FirstOrDefault();
+            return item?.Url;
+        }
+
+        public bool IsAliasExist(string alias)
+        {
+            var items = _aliasRepository.Get(x => x.AliasName == alias);
+            return !items.IsNullOrEmpty();
         }
     }
 }

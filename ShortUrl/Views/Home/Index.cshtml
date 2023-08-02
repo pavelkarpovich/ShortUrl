@@ -2,20 +2,91 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="form-outline">
-    <label class="form-label" for="formControlLg">Shorten a long link</label>
-    <input type="text" id="url-field" class="form-control form-control-lg" placeholder="Enter long link here"/>
-    <span id="url-error"></span>
-    </br>
-    <input type="text" id="alias-field" class="form-control form-control-lg" placeholder="Enter alias" />
-    <span id="alias-error"></span>
-    </br>
-    <button id ="shortenbutton" class="btn btn-primary btn-lg mt-3" onclick="shortenUrl()">Shorten URL</button>
-    <button id="gotourl" class="btn btn-primary btn-lg mt-3" onclick="goToUrl()">Go to URL</button>
-    
+
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <main class="col ps-md-2 pt-2">
+            
+            <div class="flex-container">
+                <div class="form">
+                    <div class="row">
+                        <label>Shorten a long URL</label>
+                        <div class="horizontal-item">
+                            <input id="url-field" type="text" placeholder="Enter long link here" />
+                            <span id="url-error"></span>
+                        </div>
+
+                        <label>Customize your link</label>
+                        <div class="horizontal-item">
+                            <input id="alias-field" type="text" placeholder="Enter alias" />
+                            <span id="alias-error">Alias must be at least 5 alphanumeric characters</span>
+                        </div>
+
+
+                        <div class="horizontal-item-buttons">
+                            <button id="goToUrlButton" onclick="goToUrl()">Go to URL</button>
+                            <button id="copyUrlButton" onclick="copyUrl()">Copy URL</button>
+                        </div>
+                        <div id="shorten-button-horizontal-item">
+                            <button id="shortenbutton" class="btn btn-primary btn-lg mt-3" onclick="shortenUrl()">Shorten URL</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            
+            @*<a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="border rounded-3 p-1 text-decoration-none"><i class="bi bi-list bi-lg py-2 p-1"></i> Menu</a>*@
+        </main>
+        <div class="col-auto px-0">
+            <div id="sidebar" class="collapse collapse-horizontal show border-end">
+                @*<div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start">*@
+                <div id="sidebar-nav" class="list-group border-0 rounded-0">
+                    @*<div class="my-horizontal-item">
+                        <div>Item</div>
+
+                        <div class="buttons">
+                            <div class="button-arrow">
+                                <object type="image/svg+xml" data="/img/arrow-right.svg"> </object>
+                            </div>
+                            <div class="button-cross">
+                                <object type="image/svg+xml" data="/img/arrow-right.svg"> </object>
+                            </div>
+                        </div>
+                    </div>*@
+
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
+<style>
+    #sidebar-nav {
+        border: solid;
+        border-color: black;
+        position: sticky;
+    width: 500px;
+    /*position:fixed;*/
+  /*z-index: 1000;*/
+  right: 0;
+  /*top: 20;*/
+  border-right: 1px solid #162636;
+  /*height: 100%;*/
+        /*overflow-y: scroll;*/
+    }
 
-@*@section Scripts {
-    <script src="~/js/validation.js></script>
-}*@
+    #sidebar {
+        border: solid;
+        border-color: black;
+        min-height: 500px;
+    }
+
+
+    
+</style>
