@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortUrl.ApplicationCore", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortUrl.Infrastructure", "ShortUrl.Infrastructure\ShortUrl.Infrastructure.csproj", "{CCE4DD58-F17A-4C9E-B588-AD6380D590DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortUrl.Tests", "ShortUrl.Tests\ShortUrl.Tests.csproj", "{597741EF-8724-4619-B61E-06F26E628E3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CCE4DD58-F17A-4C9E-B588-AD6380D590DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCE4DD58-F17A-4C9E-B588-AD6380D590DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCE4DD58-F17A-4C9E-B588-AD6380D590DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597741EF-8724-4619-B61E-06F26E628E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597741EF-8724-4619-B61E-06F26E628E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597741EF-8724-4619-B61E-06F26E628E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597741EF-8724-4619-B61E-06F26E628E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

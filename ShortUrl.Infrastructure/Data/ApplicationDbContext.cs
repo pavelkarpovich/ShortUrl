@@ -10,7 +10,7 @@ namespace ShortUrl.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Alias> Aliases { get; set; }
+        public DbSet<AliasUrl> Aliases { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }

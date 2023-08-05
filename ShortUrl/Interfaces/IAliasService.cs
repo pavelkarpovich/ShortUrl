@@ -6,7 +6,8 @@ namespace ShortUrl.Web.Interfaces
     {
         bool IsAliasExist(string alias);
         void AddAlias(string alias, string url, string userId);
+        void DeleteAlias(string alias);
         string? GetUrl(string alias);
-        Task<IEnumerable<AliasUrl>> GetMyUrls(string userId);
+        Task<IEnumerable<AliasUrlModel>> GetMyUrls(string userId);
     }
 }

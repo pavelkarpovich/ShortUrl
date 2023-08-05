@@ -103,7 +103,7 @@ body {
 }
 
 .my-horizontal-item {
-    height: 30px;
+    /*height: 30px;*/
     display: flex;
     margin-bottom: 3px;
     flex-direction: column;
@@ -120,3 +120,20 @@ body {
 .button-cross {
     width: 15px;
 }
+#sidebar-nav {
+    border: solid;
+    border-color: black;
+    position: sticky;
+    width: 500px;
+    right: 0;
+    border-right: 1px solid #162636;
+}
+
+#sidebar {
+    border: solid;
+    border-color: black;
+    min-height: 500px;
+}
+
+
+    

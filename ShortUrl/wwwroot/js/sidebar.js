@@ -20,7 +20,7 @@ if ($('#partialContainer').length > 0) {
 $('html').click(function () {
     var id = event.target.getAttribute("id");
     //if (id != 'myUrlsButton' && id != 'sidebar')
-    if (!(event.target.id == "sidebar" || $(event.target).parents("#sidebar").length || event.target.id == "myUrlsButton"))
+    if (!(event.target.id == "sidebar" || $(event.target).parents("#sidebar").length || event.target.id == "myUrlsButton" || event.target.outerText == 'Delete'))
      document.getElementById('sidebar').style.visibility = "hidden";
 });
 
@@ -36,42 +36,63 @@ $('#myUrlsButton').click(function (event) {
             .done(function (result) {
 
                 //let x = result;
-
+                
+                let text = "";
                 for (var i = 0; i < result.length; i++) {
                     var url = result[i].urlValue;
                     var alias = result[i].aliasValue;
 
                     document.getElementById('sidebar-nav').innerHTML = '';
-                    const div = document.createElement('div');
-
+                    //var div = document.createElement('div');
+                    let div = document.createElement('div');
+                    
                     div.className = 'row';
 
-                    div.innerHTML = `
+                    text = text + 
+                    `
                         <div class="my-horizontal-item">
                             <div class="sidebar-url">` + result[i].urlValue +`</div>
                             <div class="sidebar-alias">` + result[i].aliasValue +`</div>
                             <div class="buttons">
                                 <button class="sidebar-gotourl-button" alias="` + result[i].aliasValue + `" onclick="sidebarGoToUrl(this)">Go to Url</button>
-                                <button class="sidebar-delete-button" alias="` + result[i].aliasValue + `">Delete</button>
+                                <button class="sidebar-delete-button" alias="` + result[i].aliasValue + `" onclick="sidebarDelete(this)">Delete</button>
 
                             </div>
                         </div>
   `;
-
-                    document.getElementById('sidebar-nav').appendChild(div);
+                    div.innerHTML = text;
+                    //document.getElementById('sidebar-nav').appendChild(div);
+                    document.getElementById('sidebar-nav').innerHTML = document.getElementById('sidebar-nav').innerHTML + div.innerHTML;
                 }
         
 
             });
     }
-        
     else
         sideBar.style.visibility = "hidden";
 });
 
 
 function sidebarGoToUrl(element) {
-    var x = element.getAttribute("alias");
-    x = x;
+    var alias = element.getAttribute("alias");
+    window.open(alias, "_blank");
+}
+
+function sidebarDelete(element) {
+    var aliasFull = element.getAttribute("alias");
+    var index = aliasFull.lastIndexOf('/');
+    var alias = aliasFull.substring(index + 1, aliasFull.length);
+
+    $.ajax({
+        type: 'DELETE',
+        url: 'api/alias/deletealias',
+        data: { AliasValue: alias },
+    })
+        .done(function (result) {
+            var parent = element.closest("#sidebar-nav");
+            var child = element.closest(".my-horizontal-item");
+            parent.removeChild(child);
+        })
+    
 }
 

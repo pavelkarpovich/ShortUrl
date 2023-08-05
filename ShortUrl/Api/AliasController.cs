@@ -10,14 +10,16 @@ namespace ShortUrl.Web.Api
     public class AliasController : Controller
     {
         private readonly IAliasService _aliasService;
+        private IConfiguration _configuration;
 
-        public AliasController(IAliasService aliasService)
+        public AliasController(IAliasService aliasService, IConfiguration configuration)
         {
             _aliasService = aliasService;
+            _configuration = configuration;
         }
 
         [HttpPost("CheckAlias")]
-        public bool CheckAlias([FromForm] Alias alias)
+        public bool CheckAlias([FromForm] AliasModel alias)
         {
             var isAlisExists = _aliasService.IsAliasExist(alias.AliasValue);
             return isAlisExists;
@@ -25,25 +27,27 @@ namespace ShortUrl.Web.Api
 
 
         [HttpPost("SubmitAlias")]
-        public string SubmitAlias([FromForm] AliasUrl aliasUrl)
+        public string SubmitAlias([FromForm] AliasUrlModel aliasUrl)
         {
             var userId = User.Identity.GetUserId();
             _aliasService.AddAlias(aliasUrl.AliasValue, aliasUrl.UrlValue, userId);
-            return "https://localhost:7054/" + aliasUrl.AliasValue;
+            var hostUrl = _configuration.GetValue<string>("Url");
+            return hostUrl + aliasUrl.AliasValue;
         }
 
         [HttpGet("GetMyUrls")]
-        public async Task<IEnumerable<AliasUrl>> GetMyUrls()
+        public async Task<IEnumerable<AliasUrlModel>> GetMyUrls()
         {
             var userId = User.Identity.GetUserId();
-            //var list = new List<AliasUrl>
-            //{
-            //    new AliasUrl { UrlValue = "url1", AliasValue = "alias1" },
-            //    new AliasUrl { UrlValue = "url2", AliasValue = "alias2" }
-            //};
-
             var list = await _aliasService.GetMyUrls(userId);
             return list;
+        }
+
+        [HttpDelete("DeleteAlias")]
+        public IActionResult DeleteAlias([FromForm] AliasModel alias)
+        {
+            _aliasService.DeleteAlias(alias.AliasValue);
+            return new NoContentResult();
         }
     }
 }

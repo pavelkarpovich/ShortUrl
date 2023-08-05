@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ShortUrl.ApplicationCore.Entities
 {
-    public class Alias
+    public class AliasUrl
     {
-        public Alias(string? aliasName, string? url)
+        public AliasUrl(string? aliasName, string url)
         {
             AliasName = aliasName;
             Url = url;
         }
 
-        public Alias(string? aliasName, string? url, string? userId)
+        public AliasUrl(string? aliasName, string url, string? userId)
         {
             AliasName = aliasName;
             Url = url;
@@ -23,7 +23,7 @@ namespace ShortUrl.ApplicationCore.Entities
 
         public int Id { get; set; }
         public string? AliasName { get; set; }
-        public string? Url { get; set; }
+        public string Url { get; set; }
         public string? UserId { get; set; }
     }
 }

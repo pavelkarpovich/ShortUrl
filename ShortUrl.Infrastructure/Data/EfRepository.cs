@@ -12,12 +12,13 @@ namespace ShortUrl.Infrastructure.Data
     public class EfRepository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _dbContext;
-        DbSet<T> _dbSet;
+        //private DbSet<T> _dbSet;
+        public IQueryable<T> Items => _dbContext.Set<T>();
 
         public EfRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = dbContext.Set<T>();
+            //_dbSet = dbContext.Set<T>();
         }
 
         public T? GetById(int id)
@@ -37,19 +38,25 @@ namespace ShortUrl.Infrastructure.Data
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.AsNoTracking().Where(predicate).ToList();
+            return Items.AsNoTracking().Where(predicate).ToList();
         }
 
 
         public void Create(T item)
         {
-            _dbSet.Add(item);
+            _dbContext.Add(item);
             _dbContext.SaveChanges();
         }
 
         public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
+            return await Items.Where(predicate).ToListAsync();
+        }
+
+        public void Delete(T item)
+        {
+            _dbContext.Remove(item);
+            _dbContext.SaveChanges();
         }
     }
 }
