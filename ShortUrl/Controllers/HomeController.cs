@@ -36,15 +36,19 @@ namespace ShortUrl.Controllers
                 if (url is null)
                 {
                     _logger.LogError("Alias {@alias} does not exist", alias);
-                    return View();
+                    return RedirectToAction("HandleError");
                 }
                 else
                 {
                     _logger.LogInformation($"Redirecting to {url} ");
                     return Redirect(url);
                 }
-                    
             }
+        }
+
+        public IActionResult HandleError()
+        {
+            return View();
         }
     }
 }
