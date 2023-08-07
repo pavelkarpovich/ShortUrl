@@ -97,10 +97,10 @@ namespace ShortUrl.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<ContentResult> GetUserName()
-        {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return Content(user.Name);
-        }
+        //public async Task<ContentResult> GetUserName()
+        //{
+        //    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        //    return Content(user.Name);
+        //}
     }
 }

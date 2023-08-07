@@ -11,12 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
-builder.Services.AddSession();
 builder.Services.AddDbContext<ApplicationDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbConnection")));
 builder.Services.AddDbContext<AccountDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("UserDbConnection")));
 builder.Services.AddIdentity<Account, IdentityRole>().AddEntityFrameworkStores<AccountDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IAliasService, AliasService>();
+builder.Services.AddSwaggerGen();
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
@@ -44,8 +44,15 @@ using (var scope = app.Services.CreateScope())
         app.Logger.LogError(ex, "An error occurred adding migration to Database");
     }
 }
- // Configure the HTTP request pipeline.
- if (!app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alias Api V1");
+});
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -61,7 +68,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

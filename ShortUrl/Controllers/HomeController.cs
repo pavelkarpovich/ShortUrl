@@ -16,6 +16,7 @@ namespace ShortUrl.Controllers
             _aliasService = aliasService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             _logger.LogInformation("Application started");
