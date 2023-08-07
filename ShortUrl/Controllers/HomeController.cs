@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShortUrl.Web.Interfaces;
-using ShortUrl.Web.Models;
-using System.Diagnostics;
 
 namespace ShortUrl.Controllers
 {
@@ -20,16 +18,32 @@ namespace ShortUrl.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Application started");
             return View();
         }
 
         [HttpGet("{alias}")]
         public IActionResult Index(string alias)
         {
-            var url = _aliasService.GetUrl(alias);
-            if (url is null)
+            if (alias == "ShortUrl.styles.css")
+            {
                 return View();
-            else return Redirect(url);
+            }
+            else
+            {
+                var url = _aliasService.GetUrl(alias);
+                if (url is null)
+                {
+                    _logger.LogError("Alias {@alias} does not exist", alias);
+                    return View();
+                }
+                else
+                {
+                    _logger.LogInformation($"Redirecting to {url} ");
+                    return Redirect(url);
+                }
+                    
+            }
         }
     }
 }

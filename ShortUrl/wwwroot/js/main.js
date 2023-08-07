@@ -72,7 +72,6 @@ function shortenUrl()
             urlError.style.color = "black";
             urlError.innerHTML = "";
             urlField.style.borderColor = "rgb(22, 22, 22)";
-
             if (aliasField.value.length > 0) {
                 $.ajax({
                     type: 'POST',
@@ -88,7 +87,6 @@ function shortenUrl()
                             errorAlias = true;
                         }
                             else {
-
                                 $.ajax({
                                     type: 'POST',
                                     url: 'api/alias/submitalias',
@@ -104,7 +102,6 @@ function shortenUrl()
                                         goToUrlButton.style.visibility = "visible";
                                         copyUrlButton.style.visibility = "visible";
                                         shortenButton.innerHTML = "Shorten another";
-
                                         aliasError.style.color = "black";
                                         aliasError.innerHTML = "";
                                         aliasField.style.borderColor = "rgb(22, 22, 22)";
@@ -114,7 +111,6 @@ function shortenUrl()
             }
             else {
                 aliasField.value = Math.random().toString(36).slice(5);
-
                 $.ajax({
                     type: 'POST',
                     url: 'api/alias/submitalias',
@@ -130,7 +126,6 @@ function shortenUrl()
                         goToUrlButton.style.visibility = "visible";
                         copyUrlButton.style.visibility = "visible";
                         shortenButton.innerHTML = "Shorten another";
-
                         aliasError.style.color = "black";
                         aliasError.innerHTML = "";
                         aliasField.style.borderColor = "rgb(22, 22, 22)";

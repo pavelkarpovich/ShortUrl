@@ -7,6 +7,7 @@ namespace ShortUrl.Web.Api
 {
     [ApiController]
     [Route("api/alias")]
+    [Route("home/api/alias")]
     public class AliasController : Controller
     {
         private readonly IAliasService _aliasService;

@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShortUrl.ApplicationCore.Entities
+﻿namespace ShortUrl.ApplicationCore.Entities
 {
     public class AliasUrl
     {
-        public AliasUrl(string? aliasName, string url)
+        public AliasUrl(string? alias, string url)
         {
-            AliasName = aliasName;
+            Alias = alias;
             Url = url;
         }
 
-        public AliasUrl(string? aliasName, string url, string? userId)
+        public AliasUrl(string? alias, string url, string? userId)
         {
-            AliasName = aliasName;
+            Alias = alias;
             Url = url;
             UserId = userId;
         }
 
         public int Id { get; set; }
-        public string? AliasName { get; set; }
+        public string? Alias { get; set; }
         public string Url { get; set; }
         public string? UserId { get; set; }
     }

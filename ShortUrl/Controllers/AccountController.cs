@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShortUrl.ApplicationCore.Entities;
+using ShortUrl.Controllers;
 using ShortUrl.Web.ViewModels;
-using System.Security.Claims;
-using System.Security.Principal;
 
 namespace ShortUrl.Web.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Account> _userManager;
         private readonly SignInManager<Account> _signInManager;
 
-        public AccountController(UserManager<Account> userManager,
+        public AccountController(ILogger<HomeController> logger, UserManager<Account> userManager,
             SignInManager<Account> signInManager)
         {
+            _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -42,13 +43,14 @@ namespace ShortUrl.Web.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
+                    _logger.LogInformation($"User {viewModel.Email} is signed up");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
+                        _logger.LogError($"Error when attempting to sign up user {viewModel.Email}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
@@ -76,10 +78,12 @@ namespace ShortUrl.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation($"User {viewModel.Email} is signed in");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    _logger.LogError($"Error when attempting to sign in user {viewModel.Email}");
                     ModelState.AddModelError("", "Wrong email and (or) password");
                 }
             }
@@ -89,6 +93,7 @@ namespace ShortUrl.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            _logger.LogInformation($"User is logged out");
             return RedirectToAction("Index", "Home");
         }
 
