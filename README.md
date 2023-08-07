@@ -5,7 +5,7 @@ ShortUrl is a web application used for creating short links to users' web resour
 ## Description
 By entering values of initial URL and alias and pressing button "Shorten URL" shortened link of type to the initial URL is created. Link [hostname]/[alias] redirects to the user's initial URL.
 Button "Copy URL" copies created URL to clipboard, button "Go to URL" opens a new tab with created link.
-Authentification based on login/password is impplemented. For authorized users links are saved and can be viewed by pressing "My URLs" button. There is a possibility to delete a link from the list.
+Authentification based on login/password is implemented. For authorized users links are saved and can be viewed by pressing "My URLs" button. There is a possibility to delete a link from the list.
 
 ## How to use
 Running ShortUrl application on local machine requires .NET 7 to be installed.
